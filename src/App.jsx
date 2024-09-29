@@ -8,23 +8,25 @@ function App() {
 
   const [bananas, setBananas] = useState("cool bananas");
 
-  const [readData, setData] = useState({name: "A name", otherValue: ""});
+  const [readData, setData] = useState({name: "Alex", otherValue: ""});
 
-  const [pokemonName, setpokemonName] = useState("");
-  const [pokemonImage, setPokemonImage] = useState(""); 
+  const [pokemonName, setPokemonName] = useState("");
+  const [pokemonImage, setPokemonImage] = useState("");
 
   useEffect(() => {
-    console.log("Hello from the start of the component eg. componentDidMount");
 
     const getPokemonData = async () => {
-      let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${Math.floor(Math.random() * 1025) + 1}`).then(response => response.json());
+      let result = await fetch(`https://pokeapi.co/api/v2/pokemon/${Math.floor(Math.random() * 1025) + 1}`).then(response => response.json());
   
       // let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${Math.floor(Math.random() * 1025) + 1}`);
       // let data = await response.json();
   
-      setpokemonName(result.Name);
+      setPokemonName(result.name);
       setPokemonImage(result.sprites.front_default);
     }
+
+
+    console.log("Hello from the start of the component! eg. componentDidMount");
 
     getPokemonData();
 
@@ -34,13 +36,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(`Retrieve Pokemon Data: name ${pokemonName}, image: ${pokemonImage}`);
+    console.log(`Retrieved Pokemon data: name: ${pokemonName}, image: ${pokemonImage}`);
   }, [pokemonName, pokemonImage]);
 
   // useEffect(callback, dependencyArray);
 
   useEffect(() => {
-    console.log(`Count is no ${count}`);
+    console.log(`Count is now ${count}`);
   }, [count]);
 
   useEffect(() => {
@@ -65,9 +67,9 @@ function App() {
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
+        <p>{JSON.stringify(readData)}</p>
+        <p>{readData.name}</p>
       </div>
-      <p>{JSON.stringify(readData)}</p>
-      <p>{readData.name}</p>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
